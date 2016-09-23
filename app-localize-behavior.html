@@ -252,7 +252,7 @@ Polymer.AppLocalizeBehavior = {
 
   __onRequestResponse: function(event) {
     this.resources = event.response;
-    this.fire('app-localize-resources-loaded', event, { bubbles: this.bubbleEvent});
+    this.fire('app-localize-resources-loaded');
   },
 
   __onRequestError: function(event) {

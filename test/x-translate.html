@@ -10,11 +10,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../../polymer/polymer.html">
 <link rel="import" href="../app-localize-behavior.html">
+<link rel="import" href="x-translate2.html">
 
 <dom-module id="x-translate">
   <template>
     <div id="output">{{localize('greeting')}}</div>
     <div id="missing">{{localize('missing')}}</div>
+    <x-translate2></x-translate2>
   </template>
 
   <script>
@@ -24,25 +26,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       behaviors: [
         Polymer.AppLocalizeBehavior
       ],
-
+      listeners: {
+        'app-localize-resources-loaded':'_resourcesLoaded'
+      },
       properties: {
         language: {
           value: 'en',
           type: String
-        },
-        resources: {
-          type: Object,
-          value: function() {
-            return {
-              'en': {
-                'greeting': 'hello'
-              },
-              'fr' : {
-                'greeting': 'bonjour'
-              }
-            };
-          }
         }
+      },
+      ready: function () {
+        this.loadResources(this.resolveUrl('locales.json'));
+      },
+      _resourcesLoaded: function (event) {
+        console.log('This event is triggered by: ' + event.srcElement.localName + ' and listen on: ' + this.is);
       }
     });
   </script>
